@@ -1,0 +1,26 @@
+name: tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  pytest:
+    runs-on: ubuntu-latest
+    env:
+      PYTHONPATH: src
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - run: pytest -q
+      - name: Сквозной прогон — генерация и отчёты
+        run: |
+          python -m abengine generate --users 30000 --db /tmp/shop.duckdb
+          python -m abengine report --db /tmp/shop.duckdb --out /tmp/site
+          test -s /tmp/site/index.html
+      - name: Проверка методов, быстрый прогон
+        run: python scripts/run_validation.py --aa 40 --ab 20 --out /tmp/val

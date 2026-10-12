@@ -1,0 +1,79 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Блок рекомендаций v2 — отчёт A/B</title><style>
+:root{--bg:#fff;--text:#1a1a2e;--muted:#6b7280;--card:#f4f5f7;--border:#e5e7eb;--accent:#2563eb;
+--good:#15803d;--good-bg:#dcfce7;--bad:#b91c1c;--bad-bg:#fee2e2;--neutral:#4b5563;--neutral-bg:#e5e7eb;
+--band:rgba(37,99,235,.14);--band2:rgba(107,114,128,.16)}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0f1117;--text:#e5e7eb;--muted:#9ca3af;
+--card:#1a1d27;--border:#2a2e3a;--accent:#60a5fa;--good:#4ade80;--good-bg:rgba(74,222,128,.14);--bad:#f87171;
+--bad-bg:rgba(248,113,113,.14);--neutral:#d1d5db;--neutral-bg:rgba(209,213,219,.12);--band:rgba(96,165,250,.18);
+--band2:rgba(156,163,175,.18)}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:15px/1.55 -apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+main{max-width:1000px;margin:0 auto;padding:28px 16px 56px}
+a{color:var(--accent)} h1{font-size:1.7rem;line-height:1.25;margin:4px 0 6px} h2{font-size:1.15rem;margin:28px 0 10px}
+.muted{color:var(--muted)} .small{font-size:.85rem}
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin:12px 0}
+.decision{border-left:5px solid var(--neutral)} .decision.good{border-left-color:var(--good)} .decision.bad{border-left-color:var(--bad)}
+.decision h2{margin:0 0 4px}
+.badge{display:inline-block;padding:1px 9px;border-radius:999px;font-size:.8rem;font-weight:600;white-space:nowrap}
+.badge.good{background:var(--good-bg);color:var(--good)} .badge.bad{background:var(--bad-bg);color:var(--bad)}
+.badge.neutral{background:var(--neutral-bg);color:var(--neutral)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.kpi b{display:block;font-size:1.25rem}
+.scroll{overflow-x:auto} table{border-collapse:collapse;width:100%;font-size:.9rem}
+th,td{padding:7px 8px;border-bottom:1px solid var(--border);text-align:right;white-space:nowrap}
+th{color:var(--muted);font-weight:600;font-size:.8rem} th:first-child,td:first-child{text-align:left}
+td.l{text-align:left;white-space:normal} td.metric{min-width:240px}
+.pos{color:var(--good)} .neg{color:var(--bad)}
+svg{width:100%;height:auto;display:block} svg text{fill:var(--text);font-size:12px;font-family:inherit}
+svg .m{fill:var(--muted)} .legend{font-size:.82rem;color:var(--muted);margin-top:4px}
+.legend i{display:inline-block;width:14px;height:10px;border-radius:2px;margin:0 5px 0 12px;vertical-align:middle}
+footer{margin-top:36px;font-size:.82rem;color:var(--muted)}
+.chart{overflow-x:auto}
+@media (max-width:700px){.chart svg{min-width:720px}}
+</style></head><body><main>
+<p class="small"><a href="../index.html">← все эксперименты</a></p>
+<p class="muted small">recommendations_v2 · 07.09.2026 — 27.09.2026</p>
+<h1>Блок рекомендаций v2</h1>
+<p class="muted">Гипотеза: Новая модель рекомендаций повысит кликабельность карточек товара</p>
+
+<div class="card decision bad"><h2>Не раскатывать: пострадала защитная метрика</h2><div>Статистически значимо ухудшилась доля отменённых заказов. Выигрыш по основной метрике не компенсирует риск — разобраться в причинах до повторного запуска.</div></div>
+
+<div class="grid">
+ <div class="card kpi"><span class="muted small">Пользователей</span><b>118 739</b>
+  <span class="small">control 59 246 · treatment 59 493</span></div>
+ <div class="card kpi"><span class="muted small">CTR карточек товара (основная)</span><b class="pos">+6,71 %</b>
+  <span class="small">95 % ДИ [+5,86 %; +7,56 %], p < 0,0001</span></div>
+ <div class="card kpi"><span class="muted small">Сплит 50/50 (SRM)</span><b class="">в порядке</b>
+  <span class="small">χ² = 0,5, p = 0,473</span></div>
+ <div class="card kpi"><span class="muted small">Баланс до старта (выручка)</span><b class="">в порядке</b>
+  <span class="small">разница +1,6 %, p = 0,395</span></div>
+</div>
+
+<h2>Метрики</h2>
+<div class="card scroll"><table>
+<thead><tr><th>Метрика</th><th>Control</th><th>Treatment</th><th>Изменение, 95 % ДИ</th><th>p-value</th>
+<th>CUPED:<br>−дисперсия</th><th>MDE</th><th>Итог</th></tr></thead>
+<tbody><tr><td class="l metric"><b>CTR карточек товара</b> <span class="badge neutral">основная</span><br><span class="muted small">Клики / просмотры карточек</span></td><td>11,16 %</td><td>12,00 %</td><td class="pos"><b>+6,71 %</b><br><span class="small">[+5,86 %; +7,56 %]</span></td><td>< 0,0001</td><td>53 %</td><td>1,2 %</td><td><span class="badge good">лучше</span></td></tr><tr><td class="l metric"><b>Конверсия в покупку</b> <span class="badge neutral">вторичная</span><br><span class="muted small">Доля пользователей хотя бы с одним оплаченным заказом</span></td><td>19,08 %</td><td>18,89 %</td><td class=""><b>−1,51 %</b><br><span class="small">[−3,70 %; +0,68 %]</span></td><td>0,176<br><span class="muted small">Холм: 0,352</span></td><td>12 %</td><td>3,1 %</td><td><span class="badge neutral">нет разницы</span></td></tr><tr><td class="l metric"><b>Выручка на пользователя</b> <span class="badge neutral">вторичная</span><br><span class="muted small">Выручка оплаченных заказов / пользователи в эксперименте</span></td><td>886 ₽</td><td>865 ₽</td><td class=""><b>−3,14 %</b><br><span class="small">[−6,57 %; +0,29 %]</span></td><td>0,073<br><span class="muted small">Холм: 0,219</span></td><td>19 %</td><td>4,9 %</td><td><span class="badge neutral">нет разницы</span></td></tr><tr><td class="l metric"><b>Средний чек</b> <span class="badge neutral">вторичная</span><br><span class="muted small">Выручка / число оплаченных заказов</span></td><td>3 161 ₽</td><td>3 169 ₽</td><td class=""><b>+0,03 %</b><br><span class="small">[−2,39 %; +2,45 %]</span></td><td>0,982<br><span class="muted small">Холм: 0,982</span></td><td>13 %</td><td>3,5 %</td><td><span class="badge neutral">нет разницы</span></td></tr><tr><td class="l metric"><b>Доля отменённых заказов</b> <span class="badge neutral">защитная</span><br><span class="muted small">Отменённые / все заказы</span></td><td>6,25 %</td><td>8,52 %</td><td class="neg"><b>+36,25 %</b><br><span class="small">[+27,30 %; +45,20 %]</span></td><td>< 0,0001</td><td>0 %</td><td>12,8 %</td><td><span class="badge bad">хуже</span></td></tr></tbody></table>
+<p class="muted small">Изменение и интервал — с CUPED (ковариата — та же метрика за 28 дней до старта); для отношений —
+линеаризация + CUPED, без снижения дисперсии — дельта-метод. Вторичные метрики — с поправкой Холма; защитные проверяются без
+поправки, чтобы не пропустить вред. MDE — минимальный эффект, который тест заметил бы с мощностью 80 %.</p></div>
+<div class="card"><div class="chart"><svg viewBox="0 0 900 254" role="img" aria-label="Эффект по метрикам с 95 % интервалами"><line x1="344.1" x2="344.1" y1="14" y2="220" stroke="var(--border)"/><text x="344.1" y="238" text-anchor="middle" class="m">0 %</text><line x1="557.3" x2="557.3" y1="14" y2="220" stroke="var(--border)"/><text x="557.3" y="238" text-anchor="middle" class="m">+20 %</text><line x1="770.4" x2="770.4" y1="14" y2="220" stroke="var(--border)"/><text x="770.4" y="238" text-anchor="middle" class="m">+40 %</text><line x1="344.1" x2="344.1" y1="10" y2="220" stroke="var(--muted)" stroke-width="1.5"/><text x="216" y="38.0" text-anchor="end">CTR карточек товара</text><line x1="406.5" x2="424.7" y1="34.0" y2="34.0" stroke="var(--good)" stroke-width="3" stroke-linecap="round"/><circle cx="415.6" cy="34.0" r="6" fill="var(--good)"/><text x="216" y="78.0" text-anchor="end">Конверсия в покупку</text><line x1="304.7" x2="351.3" y1="74.0" y2="74.0" stroke="var(--muted)" stroke-width="3" stroke-linecap="round"/><circle cx="328.0" cy="74.0" r="6" fill="var(--muted)"/><text x="216" y="118.0" text-anchor="end">Выручка на пользователя</text><line x1="274.1" x2="347.2" y1="114.0" y2="114.0" stroke="var(--muted)" stroke-width="3" stroke-linecap="round"/><circle cx="310.7" cy="114.0" r="6" fill="var(--muted)"/><text x="216" y="158.0" text-anchor="end">Средний чек</text><line x1="318.6" x2="370.2" y1="154.0" y2="154.0" stroke="var(--muted)" stroke-width="3" stroke-linecap="round"/><circle cx="344.4" cy="154.0" r="6" fill="var(--muted)"/><text x="216" y="198.0" text-anchor="end">Доля отменённых заказов</text><line x1="635.0" x2="825.9" y1="194.0" y2="194.0" stroke="var(--bad)" stroke-width="3" stroke-linecap="round"/><circle cx="730.5" cy="194.0" r="6" fill="var(--bad)"/></svg></div>
+<div class="legend"><i style="background:var(--good)"></i>лучше <i style="background:var(--bad)"></i>хуже
+<i style="background:var(--muted)"></i>разница не значима</div></div>
+
+<h2>CTR карточек товара по дням</h2>
+<div class="card"><div class="chart"><svg viewBox="0 0 900 300" role="img" aria-label="Накопленный эффект по дням"><line x1="56" x2="884" y1="246.7" y2="246.7" stroke="var(--border)"/><text x="48" y="250.7" text-anchor="end" class="m">0 %</text><line x1="56" x2="884" y1="200.6" y2="200.6" stroke="var(--border)"/><text x="48" y="204.6" text-anchor="end" class="m">+2 %</text><line x1="56" x2="884" y1="154.5" y2="154.5" stroke="var(--border)"/><text x="48" y="158.5" text-anchor="end" class="m">+5 %</text><line x1="56" x2="884" y1="108.4" y2="108.4" stroke="var(--border)"/><text x="48" y="112.4" text-anchor="end" class="m">+8 %</text><line x1="56" x2="884" y1="62.2" y2="62.2" stroke="var(--border)"/><text x="48" y="66.2" text-anchor="end" class="m">+10 %</text><line x1="56" x2="884" y1="16.1" y2="16.1" stroke="var(--border)"/><text x="48" y="20.1" text-anchor="end" class="m">+12 %</text><text x="56.0" y="278" text-anchor="middle" class="m">1</text><text x="304.4" y="278" text-anchor="middle" class="m">7</text><text x="594.2" y="278" text-anchor="middle" class="m">14</text><text x="884.0" y="278" text-anchor="middle" class="m">21</text><text x="470.0" y="296" text-anchor="middle" class="m">день эксперимента</text><polygon points="56.0,205.5 97.4,146.6 138.8,114.7 180.2,114.8 221.6,114.8 263.0,112.8 304.4,113.1 345.8,113.1 387.2,113.2 428.6,113.2 470.0,113.3 511.4,113.1 552.8,113.2 594.2,113.3 635.6,113.3 677.0,113.4 718.4,113.4 759.8,113.4 801.2,113.4 842.6,113.2 884.0,113.3 884.0,96.5 842.6,93.6 801.2,92.3 759.8,92.3 718.4,88.6 677.0,86.1 635.6,81.4 594.2,79.2 552.8,72.8 511.4,70.0 470.0,69.2 428.6,64.4 387.2,60.3 345.8,50.7 304.4,43.7 263.0,32.1 221.6,32.6 180.2,28.4 138.8,28.1 97.4,30.4 56.0,30.9" fill="var(--band2)"/><polygon points="56.0,174.6 97.4,123.2 138.8,94.4 180.2,100.4 221.6,104.3 263.0,97.0 304.4,105.2 345.8,109.2 387.2,116.3 428.6,118.4 470.0,121.4 511.4,120.7 552.8,122.0 594.2,127.1 635.6,128.4 677.0,132.1 718.4,133.7 759.8,136.6 801.2,135.3 842.6,136.5 884.0,138.7 884.0,107.3 842.6,104.6 801.2,102.8 759.8,103.6 718.4,100.1 677.0,97.7 635.6,93.2 594.2,91.2 552.8,85.1 511.4,82.6 470.0,82.1 428.6,77.7 387.2,74.0 345.8,64.9 304.4,58.5 263.0,46.8 221.6,49.4 180.2,39.8 138.8,25.3 97.4,41.0 56.0,61.9" fill="var(--band)"/><line x1="56" x2="884" y1="246.7" y2="246.7" stroke="var(--muted)" stroke-width="1.2"/><polyline points="56.0,118.2 97.4,82.1 138.8,59.8 180.2,70.1 221.6,76.8 263.0,71.9 304.4,81.9 345.8,87.1 387.2,95.1 428.6,98.0 470.0,101.8 511.4,101.7 552.8,103.6 594.2,109.1 635.6,110.8 677.0,114.9 718.4,116.9 759.8,120.1 801.2,119.0 842.6,120.5 884.0,123.0" fill="none" stroke="var(--accent)" stroke-width="2.4"/></svg></div>
+<div class="legend"><i style="background:var(--accent)"></i>накопленный эффект
+<i style="background:var(--band)"></i>95 % ДИ на этот день <i style="background:var(--band2)"></i>всегда-валидный ДИ (mSPRT)</div>
+<p class="small">Если бы решение принимали, глядя на результат каждый день, обычный тест впервые показал бы p < 0,05 на 1-й день. Всегда-валидный mSPRT, рассчитанный на ежедневные взгляды, — на 1-й день. Итог принимается по плановой длительности (21 дней); узкий синий интервал честен только
+для одного взгляда в конце. Серый — интервал, которым можно пользоваться при ежедневном мониторинге.</p></div>
+
+<h2>Срезы по платформам</h2>
+<div class="card scroll"><table><thead><tr><th>Платформа</th><th>Пользователей</th><th>CTR карточек товара</th>
+<th>95 % ДИ</th><th>p-value</th></tr></thead><tbody><tr><td>Android</td><td>41 819</td><td class="pos">+6,53 %</td><td>[+5,12 %; +7,95 %]</td><td>< 0,0001</td></tr><tr><td>iOS</td><td>24 450</td><td class="pos">+7,28 %</td><td>[+5,51 %; +9,05 %]</td><td>< 0,0001</td></tr><tr><td>Веб</td><td>52 470</td><td class="pos">+6,55 %</td><td>[+5,22 %; +7,87 %]</td><td>< 0,0001</td></tr></tbody></table>
+<p class="muted small">Разведочный анализ: без поправок на множественность, решения по срезам не принимаются — только гипотезы
+для следующих экспериментов.</p></div>
+
+<footer>Отчёт собран 12.10.2026 движком <a href="https://github.com/Alex91132/ab-testing-engine">abengine</a>.
+Данные синтетические.</footer>
+</main></body></html>

@@ -1,0 +1,15 @@
+procedure,aa_false_positive,ab_power
+conv_welch,0.0525,0.5
+conv_cuped,0.054,0.538
+arpu_welch,0.0505,0.725
+arpu_cuped,0.049,0.791
+aov_delta,0.0375,0.289
+aov_naive,0.071,0.373
+ctr_delta,0.0545,0.561
+ctr_naive,0.2525,0.839
+peek_fixed_any,0.217,0.717
+peek_msprt_any,0.0135,0.237
+peek_obf_any,0.06,0.521
+srm,0.0005,0.002
+family_min_raw,0.16,0.942
+family_min_holm,0.0385,0.792

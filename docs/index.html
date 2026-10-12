@@ -1,0 +1,44 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Отчёты A/B-экспериментов</title><style>
+:root{--bg:#fff;--text:#1a1a2e;--muted:#6b7280;--card:#f4f5f7;--border:#e5e7eb;--accent:#2563eb;
+--good:#15803d;--good-bg:#dcfce7;--bad:#b91c1c;--bad-bg:#fee2e2;--neutral:#4b5563;--neutral-bg:#e5e7eb;
+--band:rgba(37,99,235,.14);--band2:rgba(107,114,128,.16)}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0f1117;--text:#e5e7eb;--muted:#9ca3af;
+--card:#1a1d27;--border:#2a2e3a;--accent:#60a5fa;--good:#4ade80;--good-bg:rgba(74,222,128,.14);--bad:#f87171;
+--bad-bg:rgba(248,113,113,.14);--neutral:#d1d5db;--neutral-bg:rgba(209,213,219,.12);--band:rgba(96,165,250,.18);
+--band2:rgba(156,163,175,.18)}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:15px/1.55 -apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+main{max-width:1000px;margin:0 auto;padding:28px 16px 56px}
+a{color:var(--accent)} h1{font-size:1.7rem;line-height:1.25;margin:4px 0 6px} h2{font-size:1.15rem;margin:28px 0 10px}
+.muted{color:var(--muted)} .small{font-size:.85rem}
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin:12px 0}
+.decision{border-left:5px solid var(--neutral)} .decision.good{border-left-color:var(--good)} .decision.bad{border-left-color:var(--bad)}
+.decision h2{margin:0 0 4px}
+.badge{display:inline-block;padding:1px 9px;border-radius:999px;font-size:.8rem;font-weight:600;white-space:nowrap}
+.badge.good{background:var(--good-bg);color:var(--good)} .badge.bad{background:var(--bad-bg);color:var(--bad)}
+.badge.neutral{background:var(--neutral-bg);color:var(--neutral)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.kpi b{display:block;font-size:1.25rem}
+.scroll{overflow-x:auto} table{border-collapse:collapse;width:100%;font-size:.9rem}
+th,td{padding:7px 8px;border-bottom:1px solid var(--border);text-align:right;white-space:nowrap}
+th{color:var(--muted);font-weight:600;font-size:.8rem} th:first-child,td:first-child{text-align:left}
+td.l{text-align:left;white-space:normal} td.metric{min-width:240px}
+.pos{color:var(--good)} .neg{color:var(--bad)}
+svg{width:100%;height:auto;display:block} svg text{fill:var(--text);font-size:12px;font-family:inherit}
+svg .m{fill:var(--muted)} .legend{font-size:.82rem;color:var(--muted);margin-top:4px}
+.legend i{display:inline-block;width:14px;height:10px;border-radius:2px;margin:0 5px 0 12px;vertical-align:middle}
+footer{margin-top:36px;font-size:.82rem;color:var(--muted)}
+.chart{overflow-x:auto}
+@media (max-width:700px){.chart svg{min-width:720px}}
+</style></head><body><main>
+<h1>Эксперименты</h1>
+<p class="muted">Отчёты собраны движком <a href="https://github.com/Alex91132/ab-testing-engine">abengine</a>
+по синтетическим логам интернет-магазина: 150 000 пользователей, 4 недели истории и 3 недели экспериментов.
+Четыре эксперимента идут одновременно с независимым хешированием пользователей.</p>
+<div class="card scroll"><table><thead><tr><th>Эксперимент</th><th>Пользователей</th><th>Основная метрика</th>
+<th>Эффект</th><th>p-value</th><th>Решение</th></tr></thead><tbody><tr><td class="l"><a href="reports/aa_platform_check.html"><b>A/A-проверка платформы</b></a><br><span class="muted small">aa_platform_check</span></td><td>118 739</td><td class="l">Конверсия в покупку</td><td>+0,30 %</td><td>0,788</td><td><span class="badge neutral">Эффект не обнаружен</span></td></tr><tr><td class="l"><a href="reports/checkout_redesign.html"><b>Новый чекаут в один экран</b></a><br><span class="muted small">checkout_redesign</span></td><td>118 739</td><td class="l">Конверсия в покупку</td><td>+3,03 %</td><td>0,0081</td><td><span class="badge good">Раскатывать</span></td></tr><tr><td class="l"><a href="reports/promo_banner.html"><b>Баннер акции на главной</b></a><br><span class="muted small">promo_banner</span></td><td>116 441</td><td class="l">Выручка на пользователя</td><td>+0,49 %</td><td>0,785</td><td><span class="badge bad">Невалидный эксперимент</span></td></tr><tr><td class="l"><a href="reports/recommendations_v2.html"><b>Блок рекомендаций v2</b></a><br><span class="muted small">recommendations_v2</span></td><td>118 739</td><td class="l">CTR карточек товара</td><td>+6,71 %</td><td>< 0,0001</td><td><span class="badge bad">Не раскатывать</span></td></tr></tbody></table></div>
+<p class="small">Что внутри отчёта: проверка сплита (SRM) и баланса групп до старта, CUPED, дельта-метод для метрик-отношений,
+поправка Холма, последовательный анализ (mSPRT), срезы. Методы проверены на 3 000 симулированных экспериментов —
+<a href="https://github.com/Alex91132/ab-testing-engine#проверка-методов">результаты в README</a>.</p>
+<footer>Александр Федоров · <a href="https://alex91132.github.io/">портфолио</a></footer>
+</main></body></html>
